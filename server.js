@@ -50,7 +50,7 @@ function findAllPeople(req, res , next){
 
 function findPerson(req, res , next){
     res.setHeader('Access-Control-Allow-Origin','*');
-    lendo.findOne({_id:mongojs.ObjectId(req.params.jobId)} , function(err , success){
+    lendo.findOne({_id:mongojs.ObjectId(req.params.personId)} , function(err , success){
         console.log('Response success '+success);
         console.log('Response error '+err);
         if(success){
@@ -62,19 +62,19 @@ function findPerson(req, res , next){
 }
 
 function postNewPerson(req , res , next){
-    var job = {};
-    job.title = req.params.title;
-    job.description = req.params.description;
-    job.location = req.params.location;
-    job.postedOn = new Date();
+    var person = {};
+    person.title = req.params.title;
+    person.description = req.params.description;
+    person.location = req.params.location;
+    person.postedOn = new Date();
 
     res.setHeader('Access-Control-Allow-Origin','*');
     
-    lendo.save(job , function(err , success){
+    lendo.save(person , function(err , success){
         console.log('Response success '+success);
         console.log('Response error '+err);
         if(success){
-            res.send(201 , job);
+            res.send(201 , person);
             return next();
         }else{
             return next(err);
@@ -84,7 +84,7 @@ function postNewPerson(req , res , next){
 
 function deletePerson(req , res , next){
     res.setHeader('Access-Control-Allow-Origin','*');
-    lendo.remove({_id:mongojs.ObjectId(req.params.jobId)} , function(err , success){
+    lendo.remove({_id:mongojs.ObjectId(req.params.personId)} , function(err , success){
         console.log('Response success '+success);
         console.log('Response error '+err);
         if(success){
@@ -100,9 +100,9 @@ function deletePerson(req , res , next){
 var PATH = '/lendo'
 
 server.get({path : PATH , version : '0.0.1'} , findAllPeople);
-server.get({path : PATH +'/:jobId' , version : '0.0.1'} , findPerson);
+server.get({path : PATH +'/:personId' , version : '0.0.1'} , findPerson);
 server.post({path : PATH , version: '0.0.1'} ,postNewPerson);
-server.del({path : PATH +'/:jobId' , version: '0.0.1'} ,deletePerson);
+server.del({path : PATH +'/:personId' , version: '0.0.1'} ,deletePerson);
 
 
 server.listen(port ,ip_addr, function(){
