@@ -6,7 +6,7 @@ var mongojs = require("mongojs");
 var ip_addr = process.env.OPENSHIFT_NODEJS_IP   || '127.0.0.1';
 var port    = process.env.OPENSHIFT_NODEJS_PORT || '8080';
 
-var db_name = process.env.OPENSHIFT_APP_NAME || "lendo";
+var db_name = process.env.OPENSHIFT_APP_NAME || "lendo2";
 
 var connection_string = '127.0.0.1:27017/' + db_name;
 // if OPENSHIFT env variables are present, use the available connection info:
@@ -19,11 +19,11 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
 }
 
 var db = mongojs(connection_string, [db_name]);
-var lendo = db.collection("lendo");
+var lendo = db.collection("lendo2");
 
 
 var server = restify.createServer({
-    name : "lendo"
+    name : "lendo2"
 });
 
 server.pre(restify.pre.userAgentConnection());
@@ -63,9 +63,7 @@ function findPerson(req, res , next){
 
 function postNewPerson(req , res , next){
     var person = {};
-    person.title = req.params.title;
-    person.description = req.params.description;
-    person.location = req.params.location;
+    person.name = req.params.name;
     person.postedOn = new Date();
 
     res.setHeader('Access-Control-Allow-Origin','*');
