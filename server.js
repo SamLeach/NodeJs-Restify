@@ -8,7 +8,7 @@ var port    = process.env.OPENSHIFT_NODEJS_PORT || '8080';
 
 var db_name = process.env.OPENSHIFT_APP_NAME || "lendo";
 
-var connection_string = '127.0.0.1:27017/' + db_name;
+var connection_string = '';
 // if OPENSHIFT env variables are present, use the available connection info:
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
   connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
