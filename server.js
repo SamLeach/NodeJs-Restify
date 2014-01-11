@@ -63,9 +63,7 @@ function findJob(req, res , next){
 
 function postNewJob(req , res , next){
     var job = {};
-    job.title = req.params.title;
-    job.description = req.params.description;
-    job.location = req.params.location;
+    job.name = req.params.name;
     job.postedOn = new Date();
 
     res.setHeader('Access-Control-Allow-Origin','*');
