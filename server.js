@@ -19,7 +19,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
 }
 
 var db = mongojs(connection_string, [db_name]);
-var lendo = db.collection("lendo2");
+var lendo = db.collection("lendo2foo");
 
 
 var server = restify.createServer({
