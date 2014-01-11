@@ -6,7 +6,7 @@ var mongojs = require("mongojs");
 var ip_addr = process.env.OPENSHIFT_NODEJS_IP   || '127.0.0.1';
 var port    = process.env.OPENSHIFT_NODEJS_PORT || '8080';
 
-var db_name = process.env.OPENSHIFT_APP_NAME || "localjobs";
+var db_name = process.env.OPENSHIFT_APP_NAME || "lendo";
 
 var connection_string = '127.0.0.1:27017/' + db_name;
 // if OPENSHIFT env variables are present, use the available connection info:
@@ -19,11 +19,11 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
 }
 
 var db = mongojs(connection_string, [db_name]);
-var jobs = db.collection("jobs");
+var lendo = db.collection("lendo");
 
 
 var server = restify.createServer({
-    name : "localjobs"
+    name : "lendo"
 });
 
 server.pre(restify.pre.userAgentConnection());
@@ -32,9 +32,9 @@ server.use(restify.queryParser());
 server.use(restify.bodyParser());
 server.use(restify.CORS());
 
-function findAllJobs(req, res , next){
+function findAllPeople(req, res , next){
     res.setHeader('Access-Control-Allow-Origin','*');
-    jobs.find().limit(20).sort({postedOn : -1} , function(err , success){
+    lendo.find().limit(20).sort({postedOn : -1} , function(err , success){
         console.log('Response success '+success);
         console.log('Response error '+err);
         if(success){
@@ -48,9 +48,9 @@ function findAllJobs(req, res , next){
     
 }
 
-function findJob(req, res , next){
+function findPerson(req, res , next){
     res.setHeader('Access-Control-Allow-Origin','*');
-    jobs.findOne({_id:mongojs.ObjectId(req.params.jobId)} , function(err , success){
+    lendo.findOne({_id:mongojs.ObjectId(req.params.jobId)} , function(err , success){
         console.log('Response success '+success);
         console.log('Response error '+err);
         if(success){
@@ -61,7 +61,7 @@ function findJob(req, res , next){
     })
 }
 
-function postNewJob(req , res , next){
+function postNewPerson(req , res , next){
     var job = {};
     job.title = req.params.title;
     job.description = req.params.description;
@@ -70,7 +70,7 @@ function postNewJob(req , res , next){
 
     res.setHeader('Access-Control-Allow-Origin','*');
     
-    jobs.save(job , function(err , success){
+    lendo.save(job , function(err , success){
         console.log('Response success '+success);
         console.log('Response error '+err);
         if(success){
@@ -82,9 +82,9 @@ function postNewJob(req , res , next){
     });
 }
 
-function deleteJob(req , res , next){
+function deletePerson(req , res , next){
     res.setHeader('Access-Control-Allow-Origin','*');
-    jobs.remove({_id:mongojs.ObjectId(req.params.jobId)} , function(err , success){
+    lendo.remove({_id:mongojs.ObjectId(req.params.jobId)} , function(err , success){
         console.log('Response success '+success);
         console.log('Response error '+err);
         if(success){
@@ -97,12 +97,12 @@ function deleteJob(req , res , next){
     
 }
 
-var PATH = '/jobs'
+var PATH = '/lendo'
 
-server.get({path : PATH , version : '0.0.1'} , findAllJobs);
-server.get({path : PATH +'/:jobId' , version : '0.0.1'} , findJob);
-server.post({path : PATH , version: '0.0.1'} ,postNewJob);
-server.del({path : PATH +'/:jobId' , version: '0.0.1'} ,deleteJob);
+server.get({path : PATH , version : '0.0.1'} , findAllPeople);
+server.get({path : PATH +'/:jobId' , version : '0.0.1'} , findPerson);
+server.post({path : PATH , version: '0.0.1'} ,postNewPerson);
+server.del({path : PATH +'/:jobId' , version: '0.0.1'} ,deletePerson);
 
 
 server.listen(port ,ip_addr, function(){
