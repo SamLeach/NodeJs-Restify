@@ -6,7 +6,7 @@ var mongojs = require("mongojs");
 var ip_addr = process.env.OPENSHIFT_NODEJS_IP   || '127.0.0.1';
 var port    = process.env.OPENSHIFT_NODEJS_PORT || '8080';
 
-var db_name = process.env.OPENSHIFT_APP_NAME || "lendo2";
+var db_name = process.env.OPENSHIFT_APP_NAME || "lendo";
 
 var connection_string = '127.0.0.1:27017/' + db_name;
 // if OPENSHIFT env variables are present, use the available connection info:
@@ -19,11 +19,11 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
 }
 
 var db = mongojs(connection_string, [db_name]);
-var lendo = db.collection("lendo2foo");
+var lendo = db.collection("lendofoo");
 
 
 var server = restify.createServer({
-    name : "lendo2"
+    name : "lendo"
 });
 
 server.pre(restify.pre.userAgentConnection());
