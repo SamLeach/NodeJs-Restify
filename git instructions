@@ -1,0 +1,11 @@
+git add .
+git commit -m 'My changes'
+git push
+
+MongoDB 2.2 database added.  Please make note of these credentials:
+
+   Root User:     admin
+   Root Password: j_E7uSzezJf6
+   Database Name: lendo2
+
+Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
