@@ -13,3 +13,8 @@ Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
 Root User:     admin
    Root Password: 7rnbF7p_YmNq
    Database Name: lendo2
+
+   Please make note of these MongoDB credentials:
+  RockMongo User: admin
+  RockMongo Password: 7rnbF7p_YmNq
+URL: https://lendo2-samleach.rhcloud.com/rockmongo/
