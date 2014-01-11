@@ -9,3 +9,7 @@ MongoDB 2.2 database added.  Please make note of these credentials:
    Database Name: lendo2
 
 Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
+
+Root User:     admin
+   Root Password: 7rnbF7p_YmNq
+   Database Name: lendo2
