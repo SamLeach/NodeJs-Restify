@@ -132,12 +132,12 @@ function deleteJob(req , res , next){
     
 }
 
-var PATH2 = '/items'
+var PATH2 = '/items';
 
 server.get({path : PATH2 +'/:itemId' , version : '0.0.1'} , findItem);
 server.post({path : PATH2 , version: '0.0.1'} ,postNewItem);
 
-var PATH = '/jobs'
+var PATH = '/jobs';
 
 server.get({path : PATH , version : '0.0.1'} , findAllJobs);
 server.get({path : PATH +'/:jobId' , version : '0.0.1'} , findJob);
