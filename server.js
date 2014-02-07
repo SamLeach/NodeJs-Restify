@@ -88,7 +88,7 @@ function postNewItem(req , res , next){
         console.log('Response success '+success);
         console.log('Response error '+err);
         if(success){
-            res.send(201 , job);
+            res.send(201 , item);
             return next();
         }else{
             return next(err);
