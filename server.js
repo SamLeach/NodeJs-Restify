@@ -21,6 +21,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
 var db = mongojs(connection_string, [db_name]);
 var jobs = db.collection("jobs");
 
+var items = db.collection("items");
 
 var server = restify.createServer({
     name : "localjobs"
@@ -61,6 +62,40 @@ function findJob(req, res , next){
     })
 }
 
+function findItem(req, res , next){
+    res.setHeader('Access-Control-Allow-Origin','*');
+    items.findOne({_id:mongojs.ObjectId(req.params.itemId)} , function(err , success){
+        console.log('Response success '+success);
+        console.log('Response error '+err);
+        if(success){
+            res.send(200 , success);
+            return next();
+        }
+        return next(err);
+    })
+}
+
+function postNewItem(req , res , next){
+    var item = {};
+    item.title = req.params.title;
+    item.description = req.params.description;
+    item.value = req.params.value;
+    item.postedOn = new Date();
+
+    res.setHeader('Access-Control-Allow-Origin','*');
+    
+    items.save(item , function(err , success){
+        console.log('Response success '+success);
+        console.log('Response error '+err);
+        if(success){
+            res.send(201 , job);
+            return next();
+        }else{
+            return next(err);
+        }
+    });
+}
+
 function postNewJob(req , res , next){
     var job = {};
     job.title = req.params.title;
@@ -96,6 +131,11 @@ function deleteJob(req , res , next){
     })
     
 }
+
+var PATH2 = '/items'
+
+server.get({path : PATH2 +'/:itemId' , version : '0.0.1'} , findItem);
+server.post({path : PATH2 , version: '0.0.1'} ,postNewItem);
 
 var PATH = '/jobs'
 
